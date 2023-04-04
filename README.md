@@ -7,6 +7,11 @@ As the dataset can only be downloaded, a data collection and formatting method w
 
 ## Creating AI
 ### tfai.ipynb
-My first attempt at making an AI that would read the 64x64 images. Used tensorflow/keras to split and normalize the training and testing data (I used a 85-15 split). Afterwards, a neural network with 2 hidden (dense) layers of 256 nodes each was made, using the Rectified Linear activation fucntion (ReLU) and the softmax activation function for the output nodes. With 5 epochs, I acheived a loss of 0.6147 (using `sparse_categorical_crossentropy`) and an accuracy of 0.8058. The model was stored in `model` folder
+My first attempt at making an AI that would read the 64x64 images. Used tensorflow/keras to split and normalize the training and testing data (I used a 85-15 split). Afterwards, a neural network with 2 hidden (dense) layers of 256 nodes each was made, using the Rectified Linear activation fucntion (ReLU) and the softmax activation function for the output nodes.
+
+With 5 epochs, I acheived a loss of 0.6147 (using `sparse_categorical_crossentropy`) and an accuracy of 0.8058. The model was stored in `model` folder
+
+### myai.ipynb
+Work in progress (my own hardcoded ai)
 
 Sourced from https://www.nist.gov/srd/nist-special-database-19
