@@ -1,4 +1,4 @@
-# mnist-special-database-19-ai
+# Handwritten AI
 An ai that can recognize handwritten characters trained with the mnist special database 19
 
 Steps that we worked on:
