@@ -1,3 +1,5 @@
+import numpy as np
+
 # normalizeGreyScale will take a list of flattened image arrays and "normalize" them
 # In reality, the scaling is from the pixel values from 255 - 0 into values from 1 - 0
 def normalizeGreyScale(input):
@@ -116,6 +118,105 @@ def getOneShot(label):
             value = 46
     return value
 
+# Converts neural network output to ascii characters that will be covnerted using Ascii2Char()
+def getLabel(label):
+    value = label
+    if value == 0:
+        return '36'
+    elif value == 1:
+        return '53_73'
+    elif value == 2:
+        return '4e'
+    elif value == 3:
+        return '41'
+    elif value == 4:
+        return '4c_6c'
+    elif value == 5:
+        return '4d_6d'
+    elif value == 6:
+        return '52'
+    elif value == 7:
+        return '71'
+    elif value == 8:
+        return '37'
+    elif value == 9:
+        return '49_69'
+    elif value == 10:
+        return '4f_6f'
+    elif value == 11:
+        return '6e'
+    elif value == 12:
+        return '38'
+    elif value == 13:
+        return '39'
+    elif value == 14:
+        return '50_70'
+    elif value == 15:
+        return '35'
+    elif value == 16:
+        return '32'
+    elif value == 17:
+        return '31'
+    elif value == 18:
+        return '30'
+    elif value == 19:
+        return '59_79'
+    elif value == 20:
+        return '62'
+    elif value == 21:
+        return '65'
+    elif value == 22:
+        return '72'
+    elif value == 23:
+        return '33'
+    elif value == 24:
+        return '43_63'
+    elif value == 25:
+        return '4a_6a'
+    elif value == 26:
+        return '34'
+    elif value == 27:
+        return '55_75'
+    elif value == 28:
+        return '5a_7a'
+    elif value == 29:
+        return '54'
+    elif value == 30:
+        return '68'
+    elif value == 31:
+        return '42'
+    elif value == 32:
+        return '64'
+    elif value == 33:
+        return '61'
+    elif value == 34:
+        return '74'
+    elif value == 35:
+        return '57_77'
+    elif value == 36:
+        return '47'
+    elif value == 37:
+        return '51'
+    elif value == 38:
+        return '46'
+    elif value == 39:
+        return '4b_6b'
+    elif value == 40:
+        return '58_78'
+    elif value == 41:
+        return '45'
+    elif value == 42:
+        return '44'
+    elif value == 43:
+        return '56_76'
+    elif value == 44:
+        return '67'
+    elif value == 45:
+        return '48'
+    elif value == 46:
+        return '66'
+
+
 # Converts complete lable list into target list with indeces representing slices of I
 def convertLabel2Class(labels):
     target = []
@@ -130,3 +231,23 @@ def convertLabel2OneShot(labels):
     for label in labels:
         target.append(I[getOneShot(label)])
     return target
+
+# Converts the by_merge ascii labels for each category to readable characters
+def Ascii2Char(ascii):
+    if(len(ascii) == 2):
+        return bytes.fromhex(ascii).decode("ASCII")
+    else:
+        string = ascii.split('_', -1)
+        char1 = bytes.fromhex(string[0]).decode("ASCII")
+        char2 = bytes.fromhex(string[1]).decode("ASCII")
+        return char1 + " or " + char2
+
+# Converts from ascii label from by_merge to readable character
+def Ascii2Char(ascii):
+    if(len(ascii) == 2):
+        return bytes.fromhex(ascii).decode("ASCII")
+    else:
+        string = ascii.split('_')
+        char1 = bytes.fromhex(string[0]).decode("ASCII")
+        char2 = bytes.fromhex(string[1]).decode("ASCII")        
+        return char1 + " or " + char2
