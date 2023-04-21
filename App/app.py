@@ -1,56 +1,41 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
-from kivy.graphics import Line
+from kivy.graphics import Line, Color, Quad
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.utils import rgba
-from kivy.uix.image import Image
+from kivy.graphics.texture import Texture
 
 
 
-class Home(BoxLayout):
-    def __init__(self, **kw):
-        super().__init__(**kw)
-        self.orientation = 'vertical'
-
-        title = Label(text = 'AI Helper', size_hint=(1,0.1))
-        self.add_widget(title)
-
-        picture = Image(source = 'robot.png')                   
-        self.add_widget(picture)                            # adds the picture to that page
-
-        start = Button(text = 'Start', size_hint = (1,0.1))
-        start.bind(on_press=self.next)
-        self.add_widget(start)
-
-        bottom = Widget(size_hint=(1,0.1))
-        self.add_widget(bottom)
-    def next(self, instance):                               # changes to the next page
-        app.canvas_layer()
 
 # drawInput is what makes the line appear when clicked on
 class DrawInput(Widget):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        
+        with self.canvas.before:
+            Color(1,1,1,1)
+            self.bg_quad = Quad(points= [0,0,0,0,0,0,0, 0])
+        self.bind(size = self.on_size)
+    def on_size(self, *args):
+        self.bg_quad.points = [self.x, self.y, self.right, self.y, self.right, self.top, self.x, self.top]
     def on_touch_down(self, touch):
         print(touch)
         with self.canvas:
+            Color(0,0,0,1)
             touch.ud["line"] = Line(points=(touch.x, touch.y), width = 7)       # width increase the stroke of the line
     def on_touch_move(self, touch):
         print(touch)
         touch.ud["line"].points += (touch.x, touch.y)
     
     def on_touch_up(self, touch):
-        print("RELEASED!", touch)           
-
-    def returnHome():
-        app.home_layer()               
+        print("RELEASED!", touch) 
+          
 
 class AIHelper(App):
-    def build(self):
-        self.home = Home()
-        return self.home
-    
-    def canvas_layer(self):                                             #holds all the widgets inside the main canvas page
+    def build(self):                                                 #holds all the widgets inside the main canvas page
         layout = BoxLayout(orientation= 'vertical')
 
         title = Label(text='Draw Number or Letter', size_hint=(1,0.1))
@@ -65,21 +50,16 @@ class AIHelper(App):
         layout.add_widget(refresh)
 
         submit = Button(text = 'Submit', size_hint = (1,0.1))
+        submit.bind(on_press = self.submitCanvas)
         submit.background_color = rgba(109, 205, 109)
         layout.add_widget(submit)
 
-        self.canvas =layout
-        self.root.clear_widgets()
-        self.root.add_widget(layout)
-        
-    def home_layer(self):                                   
-        self.root.clear_widgets()
-        self.build()
+        return layout
 
     def refreshCanvas(self, instance):                  #after button is pressed this refreshes the canvas
-        self.canvas_layer()
+        self.root.children[2].canvas.clear()
     def submitCanvas(self, instance):
-        self.root.children[2].export_to_png('canvas.png') # the submit button turns it into a png
+        self.root.children[2].export_to_png('canvas.png', size =(64,64)) # the submit button turns it into a png
 
 if __name__ == "__main__": #main source that runs
     app = AIHelper()
