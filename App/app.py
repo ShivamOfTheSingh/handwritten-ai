@@ -7,7 +7,10 @@ from kivy.uix.button import Button
 from kivy.utils import rgba
 from kivy.graphics.texture import Texture
 from kivy.core.window import Window
-
+import cv2 as cv
+import tensorflow as tf
+import numpy as np
+import data_prep as dp
 
 
 
@@ -60,7 +63,16 @@ class AIHelper(App):
     def refreshCanvas(self, instance):                  #after button is pressed this refreshes the canvas
         self.root.children[2].canvas.clear()
     def submitCanvas(self, instance):
-        self.root.children[2].export_to_png('canvas.png', size =(64,64))# the submit button turns it into a png
+        self.root.children[2].export_to_png('./App/img.png', size =(64,64)) # the submit button turns it into a png
+        model = tf.keras.models.load_model('model')
+        X = []
+        img_arr = cv.imread('./App/img.png', cv.IMREAD_GRAYSCALE)
+        new_arr = cv.resize(img_arr, (64, 64))
+        X.append(new_arr)
+        X = np.array(X)
+        X = X.reshape(-1, 64, 64)
+        X = tf.keras.utils.normalize(X, axis=1)
+        prediction = dp.Ascii2Char(dp.getLabel(np.argmax(model.predict(X))))
 
 if __name__ == "__main__": #main source that runs
     app = AIHelper()
