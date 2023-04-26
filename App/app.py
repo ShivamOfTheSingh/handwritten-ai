@@ -6,6 +6,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.utils import rgba
 from kivy.graphics.texture import Texture
+from kivy.core.window import Window
 
 
 
@@ -14,7 +15,7 @@ from kivy.graphics.texture import Texture
 class DrawInput(Widget):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        
+        Window.size = (640, 832)
         with self.canvas.before:
             Color(1,1,1,1)
             self.bg_quad = Quad(points= [0,0,0,0,0,0,0, 0])
@@ -59,7 +60,7 @@ class AIHelper(App):
     def refreshCanvas(self, instance):                  #after button is pressed this refreshes the canvas
         self.root.children[2].canvas.clear()
     def submitCanvas(self, instance):
-        self.root.children[2].export_to_png('canvas.png', size =(64,64)) # the submit button turns it into a png
+        self.root.children[2].export_to_png('canvas.png', size =(64,64))# the submit button turns it into a png
 
 if __name__ == "__main__": #main source that runs
     app = AIHelper()
