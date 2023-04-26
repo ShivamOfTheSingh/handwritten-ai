@@ -29,7 +29,7 @@ class DrawInput(Widget):
         print(touch)
         with self.canvas:
             Color(0,0,0,1)
-            touch.ud["line"] = Line(points=(touch.x, touch.y), width = 7)       # width increase the stroke of the line
+            touch.ud["line"] = Line(points=(touch.x, touch.y), width = 20)       # width increase the stroke of the line
     def on_touch_move(self, touch):
         print(touch)
         touch.ud["line"].points += (touch.x, touch.y)
@@ -73,6 +73,7 @@ class AIHelper(App):
         X = X.reshape(-1, 64, 64)
         X = tf.keras.utils.normalize(X, axis=1)
         prediction = dp.Ascii2Char(dp.getLabel(np.argmax(model.predict(X))))
+        print("AI PREDICTION:", prediction)
 
 if __name__ == "__main__": #main source that runs
     app = AIHelper()
