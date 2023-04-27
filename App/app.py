@@ -7,10 +7,12 @@ from kivy.uix.button import Button
 from kivy.utils import rgba
 from kivy.graphics.texture import Texture
 from kivy.core.window import Window
+from kivy.uix.popup import Popup
 import cv2 as cv
 import tensorflow as tf
 import numpy as np
 import data_prep as dp
+
 
 
 
@@ -36,11 +38,29 @@ class DrawInput(Widget):
     
     def on_touch_up(self, touch):
         print("RELEASED!", touch) 
-          
+
+class PredictionPopup(Popup):
+    def __init__(self, prediction, **kwargs):
+        super().__init__(**kwargs)
+        layout = BoxLayout(orientation = 'vertical')
+        content = Label(text = f'AI PREDICTION: {prediction} ')
+        layout.add_widget(content)
+        close = Button(text = 'X', size_hint= (1,0.2))
+        close.bind(on_press = self.dismiss)
+        layout.add_widget(close)
+
+        self.content = layout
+        self.size_hint = (0.5,0.5)
+        self.pos_hint = {'center_x': 0.5, 'center_y': 0.5}
+        self.title = 'PREDICTION'
+        self.auto_dismiss = False
+        
 
 class AIHelper(App):
     def build(self):                                                 #holds all the widgets inside the main canvas page
+
         layout = BoxLayout(orientation= 'vertical')
+
 
         title = Label(text='Draw Number or Letter', size_hint=(1,0.1))
         layout.add_widget(title)
@@ -59,6 +79,7 @@ class AIHelper(App):
         layout.add_widget(submit)
 
         return layout
+    
 
     def refreshCanvas(self, instance):                  #after button is pressed this refreshes the canvas
         self.root.children[2].canvas.clear()
@@ -74,41 +95,11 @@ class AIHelper(App):
         X = tf.keras.utils.normalize(X, axis=1)
         prediction = dp.Ascii2Char(dp.getLabel(np.argmax(model.predict(X))))
         print("AI PREDICTION:", prediction)
+        popup = PredictionPopup(prediction)
+        popup.open()
+
 
 if __name__ == "__main__": #main source that runs
     app = AIHelper()
     app.run()
 
-
-
-
-
-
-
-
-# from kivy.app import App
-# from kivy.uix.gridlayout import GridLayout
-# from kivy.uix.label import Label
-# from kivy.uix.textinput import TextInput
-# from kivy.uix.button import Button
-
-# class childApp(GridLayout):
-#     def __init__(self, **kwargs):
-#         super().__init__(**kwargs)
-#         self.cols = 2
-#         self.add_widget(Label(text = 'Student Name'))
-#         self.s_name = TextInput()
-#         self.add_widget(self.s_name)
-
-#         self.add_widget(Label(text = 'Student Marks'))
-#         self.s_marks = TextInput()
-#         self.add_widget(self.s_marks)
-
-#         self.add_widget(Label(text = 'Student Gender'))
-#         self.s_gender = TextInput()
-#         self.add_widget(self.s_gender)
-# class parentApp(App):
-#     def build(self):
-#         return childApp()
-# if __name__ == "__main__":
-#     parentApp().run()
