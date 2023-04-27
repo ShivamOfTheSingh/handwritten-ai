@@ -94,7 +94,6 @@ class AIHelper(App):
         X = X.reshape(-1, 64, 64)
         X = tf.keras.utils.normalize(X, axis=1)
         prediction = dp.Ascii2Char(dp.getLabel(np.argmax(model.predict(X))))
-        print("AI PREDICTION:", prediction)
         popup = PredictionPopup(prediction)
         popup.open()
 
