@@ -31,7 +31,7 @@ class DrawInput(Widget):
         print(touch)
         with self.canvas:
             Color(0,0,0,1)
-            touch.ud["line"] = Line(points=(touch.x, touch.y), width = 32)       # width increase the stroke of the line
+            touch.ud["line"] = Line(points=(touch.x, touch.y), width = 45)       # width increase the stroke of the line
     def on_touch_move(self, touch):
         print(touch)
         touch.ud["line"].points += (touch.x, touch.y)
