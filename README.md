@@ -1,3 +1,6 @@
+
+![handwritten-ai-gif](https://github.com/user-attachments/assets/899d7ec5-21a7-42b7-a444-ae4e842155ff)
+
 # Handwritten AI
 An AI that can recognize handwritten characters trained with the mnist special database 19, made using tensorflow/keras
 
