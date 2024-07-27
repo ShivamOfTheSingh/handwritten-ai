@@ -1,5 +1,6 @@
-
-                                                         ![handwritten-ai-gif](https://github.com/user-attachments/assets/899d7ec5-21a7-42b7-a444-ae4e842155ff)
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/899d7ec5-21a7-42b7-a444-ae4e842155ff" alt="handwritten-ai-gif" />
+</div>
 
 # Handwritten AI
 An AI that can recognize handwritten characters trained with the mnist special database 19, made using tensorflow/keras
@@ -11,7 +12,7 @@ As the dataset can only be downloaded, a data collection and formatting method w
 ### tfai.ipynb
 My first attempt at making an AI that would read the 64x64 images. Used tensorflow/keras to split and normalize the training and testing data (I used a 85-15 split). Afterwards, a neural network with 3 hidden (dense) layers of 512 nodes each was made, using the softplus activation function for the hidden layers
 
-With 5 epochs, I achieved a loss of 0.4810 (using `sparse_categorical_crossentropy`) and an accuracy of 0.8452. The model was stored in `model` folder
+With 5 epochs, I achieved a loss of 0.4810 (using `sparse_categorical_crossentropy`) and an accuracy of 0.8452. The model was stored in the `model` folder.
 
 ## Final Details
 ### App
